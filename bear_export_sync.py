@@ -541,7 +541,7 @@ def update_bear_note(md_text, md_file, ts, ts_last_export):
             link_original = 'bear://x-callback-url/open-note?id=' + uuid
             message = '::Sync conflict! External update: ' + time_stamp_ts(ts) + '::'
             message += '\n[Click here to see original Bear note](' + link_original + ')'
-            x_create = 'bear://x-callback-url/create?show_window=no' 
+            x_create = 'bear://x-callback-url/create?show_window=no&open_note=no' 
             bear_x_callback(x_create, md_text, message, '')   
         else:
             # Regular external update
