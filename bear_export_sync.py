@@ -257,7 +257,7 @@ def sub_path_from_tag(temp_path, filename, md_text):
             # No tags found, copy to root level only
             return [os.path.join(temp_path, filename)]
         tags = [tag]
-    paths = []
+    paths = [os.path.join(temp_path, filename)]
     for tag in tags:
         if tag == '/':
             continue
