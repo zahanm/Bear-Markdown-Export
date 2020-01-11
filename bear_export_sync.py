@@ -5,8 +5,9 @@
 
 '''
 # Markdown export from Bear sqlite database 
-Version 1.3.11, 2018-02-11 at 07:43 EST
-github/rovest, rorves@twitter
+Version 1.4, 2020-01-11
+modified by: github/andymatuschak, andy_matuschak@twitter
+original author: github/rovest, rorves@twitter
 
 See also: bear_import.py for auto import to bear script.
 
@@ -74,11 +75,11 @@ import json
 import argparse
 
 parser = argparse.ArgumentParser(description="Sync Bear notes")
-parser.add_argument("--out", default=default_out_folder)
-parser.add_argument("--backup", default=default_backup_folder)
-parser.add_argument("--images", default=None)
-parser.add_argument("--skipImport", action="store_const", const=True, default=False)
-parser.add_argument("--excludeTag", action="append", default=[])
+parser.add_argument("--out", default=default_out_folder, help="Path where Bear notes will be synced")
+parser.add_argument("--backup", default=default_backup_folder, help="Path where conflicts will be backed up (must be outside of --out)")
+parser.add_argument("--images", default=None, help="Path where images will be stored")
+parser.add_argument("--skipImport", action="store_const", const=True, default=False, help="When present, the script only exports from Bear to Markdown; it skips the import step.")
+parser.add_argument("--excludeTag", action="append", default=[], help="Don't export notes with this tag. Can be used multiple times.")
 
 parsed_args = vars(parser.parse_args())
 
