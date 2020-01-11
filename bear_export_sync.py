@@ -343,7 +343,7 @@ def restore_tags(md_text):
 
 
 def clean_title(title):
-    title = title[:56].strip()
+    title = title[:256].strip()
     if title == "":
         title = "Untitled"
     title = re.sub(r'[/\\*?$@!^&\|~:]', r'-', title)
