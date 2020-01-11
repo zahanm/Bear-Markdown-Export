@@ -346,7 +346,7 @@ def clean_title(title):
     title = title[:256].strip()
     if title == "":
         title = "Untitled"
-    title = re.sub(r'[/\\*?$@!^&\|~:]', r'-', title)
+    title = re.sub(r'[/\\*?$@!^&\|~:\.]', r'-', title)
     title = re.sub(r'-$', r'', title)    
     return title.strip()
 
