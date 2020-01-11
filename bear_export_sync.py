@@ -614,7 +614,7 @@ def bear_x_callback(x_command, md_text, message, orig_title):
         else:
             md_text = '\n'.join(lines[1:])        
     x_command_text = x_command + '&text=' + urllib.parse.quote(md_text)
-    subprocess.call(["open", x_command_text])
+    subprocess.call(["open", "-g", x_command_text])
     time.sleep(.2)
 
 
