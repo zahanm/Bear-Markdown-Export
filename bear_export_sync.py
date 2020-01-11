@@ -46,8 +46,6 @@ hide_tags_in_comment_block = True  # Hide tags in HTML comments: `<!-- #mytag --
 # Also, they only work if `make_tag_folders = True`.
 only_export_these_tags = []  # Leave this list empty for all notes! See below for sample
 # only_export_these_tags = ['bear/github', 'writings'] 
-no_export_tags = []  # If a tag in note matches one in this list, it will not be exported.
-# no_export_tags = ['private', '.inbox', 'love letters', 'banking'] 
 
 export_as_textbundles = False  # Exports as Textbundles with images included
 export_as_hybrids = True  # Exports as .textbundle only if images included, otherwise as .md
@@ -56,8 +54,10 @@ export_image_repository = True  # Export all notes as md but link images to
                                  # a common repository exported to: `assets_path` 
                                  # Only used if `export_as_textbundles = False`
 
-my_sync_service = 'Dropbox'  # Change 'Dropbox' to 'Box', 'Onedrive',
-    # or whatever folder of sync service you need.
+import os
+HOME = os.getenv('HOME', '')
+default_out_folder = os.path.join(HOME, "Work", "BearNotes")
+default_backup_folder = os.path.join(HOME, "Work", "BearSyncBackup")
 
 # NOTE! Your user 'HOME' path and '/BearNotes' is added below!
 # NOTE! So do not change anything below here!!!
@@ -67,18 +67,28 @@ import datetime
 import re
 import subprocess
 import urllib.parse
-import os
 import time
 import shutil
 import fnmatch
 import json
+import argparse
 
-HOME = os.getenv('HOME', '')
+parser = argparse.ArgumentParser(description="Sync Bear notes")
+parser.add_argument("--out", default=default_out_folder)
+parser.add_argument("--backup", default=default_backup_folder)
+parser.add_argument("--images", default=None)
+parser.add_argument("--skipImport", action="store_const", const=True, default=False)
+parser.add_argument("--excludeTag", action="append", default=[])
+
+parsed_args = vars(parser.parse_args())
+
 
 set_logging_on = True
 
 # NOTE! if 'BearNotes' is left blank, all other files in my_sync_service will be deleted!! 
-export_path = os.path.join(HOME, my_sync_service, 'BearNotes')
+export_path = parsed_args.get("out")
+no_export_tags = parsed_args.get("excludeTag")  # If a tag in note matches one in this list, it will not be exported.
+
 # NOTE! "export_path" is used for sync-back to Bear, so don't change this variable name!
 multi_export = [(export_path, True)]  # only one folder output here. 
 # Use if you want export to severa places like: Dropbox and OneDrive, etc. See below
@@ -92,13 +102,13 @@ multi_export = [(export_path, True)]  # only one folder output here.
 
 temp_path = os.path.join(HOME, 'Temp', 'BearExportTemp')  # NOTE! Do not change the "BearExportTemp" folder name!!!
 bear_db = os.path.join(HOME, 'Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/database.sqlite')
-sync_backup = os.path.join(HOME, my_sync_service, 'BearSyncBackup') # Backup of original note before sync to Bear.
+sync_backup = parsed_args.get("backup") # Backup of original note before sync to Bear.
 log_file = os.path.join(sync_backup, 'bear_export_sync_log.txt')
 
 # Paths used in image exports:
 bear_image_path = os.path.join(HOME,
     'Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/Local Files/Note Images')
-assets_path = os.path.join(HOME, export_path, 'BearImages')
+assets_path = parsed_args.get("images") if parsed_args.get("images") else os.path.join(export_path, 'BearImages')
 
 sync_ts = '.sync-time.log'
 export_ts = '.export-time.log'
@@ -114,7 +124,8 @@ gettag_txt = os.path.join(HOME, 'temp/gettag.txt')
 
 def main():
     init_gettag_script()
-    sync_md_updates()
+    if not parsed_args.get("skipImport"):
+        sync_md_updates()
     if check_db_modified():
         delete_old_temp_files()
         note_count = export_markdown()
