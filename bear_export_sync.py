@@ -158,7 +158,7 @@ def export_markdown():
         creation_date = row['ZCREATIONDATE']
         modified = row['ZMODIFICATIONDATE']
         uuid = row['ZUNIQUEIDENTIFIER']
-        filename = clean_title(title) + date_time_conv(creation_date)
+        filename = clean_title(title)
         file_list = []
         if make_tag_folders:
             file_list = sub_path_from_tag(temp_path, filename, md_text)
