@@ -299,9 +299,9 @@ def restore_image_links(md_text):
     '''
     MD image links restored back to Bear links
     '''
-    if not re.search(r'!\[.*?\]\(assets/.+?\)', md_text):
+    #if not re.search(r'!\[.*?\]\(assets/.+?\)', md_text):
         # No image links in note, return unchanged:
-        return md_text
+    #    return md_text
     if export_as_textbundles:
         md_text = re.sub(r'!\[(.*?)\]\(assets/(.+?)_(.+?)( ".+?")?\) ?', r'[image:\2/\3]\4 \1', md_text)
     elif export_image_repository :
