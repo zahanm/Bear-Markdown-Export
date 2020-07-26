@@ -37,10 +37,10 @@ or leave list empty for all notes: `limit_export_to_tags = []`
 * Or export as textbundles with images included 
 '''
 
-make_tag_folders = True  # Exports to folders using first tag only, if `multi_tag_folders = False`
+make_tag_folders = False  # Exports to folders using first tag only, if `multi_tag_folders = False`
 multi_tag_folders = True  # Copies notes to all 'tag-paths' found in note!
                           # Only active if `make_tag_folders = True`
-hide_tags_in_comment_block = True  # Hide tags in HTML comments: `<!-- #mytag -->`
+hide_tags_in_comment_block = False  # Hide tags in HTML comments: `<!-- #mytag -->`
 
 # The following two lists are more or less mutually exclusive, so use only one of them.
 # (You can use both if you have some nested tags where that makes sense)
@@ -48,7 +48,7 @@ hide_tags_in_comment_block = True  # Hide tags in HTML comments: `<!-- #mytag --
 only_export_these_tags = []  # Leave this list empty for all notes! See below for sample
 # only_export_these_tags = ['bear/github', 'writings'] 
 
-export_as_textbundles = False  # Exports as Textbundles with images included
+export_as_textbundles = True  # Exports as Textbundles with images included
 export_as_hybrids = True  # Exports as .textbundle only if images included, otherwise as .md
                           # Only used if `export_as_textbundles = True`
 export_image_repository = True  # Export all notes as md but link images to 
