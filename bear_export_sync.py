@@ -358,12 +358,16 @@ def restore_tags(md_text):
 
 
 def clean_title(title):
+    og_title = title
     title = title[:256].strip()
     if title == "":
         title = "Untitled"
     title = re.sub(r'[/\\*?$@!^&\|~:\.]', r'-', title)
     title = re.sub(r'-$', r'', title)    
-    return title.strip()
+    new_title = title.strip()
+    if og_title != new_title:
+        print(f"Invalid chars in title: {og_title}")
+    return new_title
 
 
 def write_file(filename, file_content, modified):
