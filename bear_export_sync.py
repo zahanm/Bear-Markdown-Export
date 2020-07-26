@@ -184,7 +184,8 @@ def export_markdown():
             md_text += '\n\n<!-- {BearID:' + uuid + '} -->\n'
             for filepath in file_list:
                 note_count += 1
-                # print(filepath)
+                if os.path.exists(f"{filepath}.md"):
+                    print(f"Duplicate: {filepath}.md")
                 if export_as_textbundles:
                     if check_image_hybrid(md_text):
                         make_text_bundle(md_text, filepath, mod_dt)                        
