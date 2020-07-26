@@ -59,6 +59,7 @@ import os
 HOME = os.getenv('HOME', '')
 default_out_folder = os.path.join(HOME, "Work", "BearNotes")
 default_backup_folder = os.path.join(HOME, "Work", "BearSyncBackup")
+temp_root_folder = '/tmp/Bear-Markdown-Export'
 
 # NOTE! Your user 'HOME' path and '/BearNotes' is added below!
 # NOTE! So do not change anything below here!!!
@@ -101,7 +102,7 @@ multi_export = [(export_path, True)]  # only one folder output here.
 # Set this flag fo False only for folders to keep old deleted versions of notes
 # multi_export = [(export_path, True), (export_path_aux1, False), (export_path_aux2, True)]
 
-temp_path = os.path.join(HOME, 'Temp', 'BearExportTemp')  # NOTE! Do not change the "BearExportTemp" folder name!!!
+temp_path = os.path.join(temp_root_folder, 'BearExportTemp')  # NOTE! Do not change the "BearExportTemp" folder name!!!
 bear_db = os.path.join(HOME, 'Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/database.sqlite')
 sync_backup = parsed_args.get("backup") # Backup of original note before sync to Bear.
 log_file = os.path.join(sync_backup, 'bear_export_sync_log.txt')
@@ -119,8 +120,8 @@ sync_ts_file_temp = os.path.join(temp_path, sync_ts)
 export_ts_file_exp = os.path.join(export_path, export_ts)
 export_ts_file = os.path.join(temp_path, export_ts)
 
-gettag_sh = os.path.join(HOME, 'temp/gettag.sh')
-gettag_txt = os.path.join(HOME, 'temp/gettag.txt')
+gettag_sh = os.path.join(temp_root_folder, 'gettag.sh')
+gettag_txt = os.path.join(temp_root_folder, 'gettag.txt')
 
 
 def main():
@@ -703,7 +704,7 @@ def init_gettag_script():
     JSON="$(xattr -p com.apple.metadata:_kMDItemUserTags "$1" | xxd -r -p | plutil -convert json - -o -)"
     echo $JSON > "$2"
     '''
-    temp = os.path.join(HOME, 'temp')
+    temp = temp_root_folder
     if not os.path.exists(temp):
         os.makedirs(temp)
     write_file(gettag_sh, gettag_script, 0)
