@@ -170,7 +170,7 @@ def export_markdown():
     for row in c:
         title = row['ZTITLE']
         md_text = row['ZTEXT'].rstrip()
-        creation_date = row['ZCREATIONDATE']
+        _creation_date = row['ZCREATIONDATE']
         modified = row['ZMODIFICATIONDATE']
         uuid = row['ZUNIQUEIDENTIFIER']
         filename = clean_title(title)
@@ -461,7 +461,7 @@ def sync_md_updates():
     # Update synced timestamp file:
     update_sync_time_file(0)
     file_types = ('*.md', '*.txt', '*.markdown')
-    for (root, dirnames, filenames) in os.walk(export_path):
+    for (root, _, filenames) in os.walk(export_path):
         '''
         This step walks down into all sub folders, if any.
         '''
