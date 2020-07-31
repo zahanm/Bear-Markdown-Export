@@ -366,8 +366,6 @@ def clean_title(title):
     title = re.sub(r'[/\\*?$@!^&\|~:\.]', r'-', title)
     title = re.sub(r'-$', r'', title)    
     new_title = title.strip()
-    if og_title != new_title:
-        print(f"Invalid chars in title: {og_title}")
     return new_title
 
 
