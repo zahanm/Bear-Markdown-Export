@@ -1,5 +1,4 @@
 {
-  "python.pythonPath": "/Users/zahanm/.local/share/virtualenvs/Bear-Markdown-Export-S8jFuhUp/bin/python",
   "editor.formatOnSave": false,
   "files.trimTrailingWhitespace": false,
   "python.formatting.provider": "autopep8"
