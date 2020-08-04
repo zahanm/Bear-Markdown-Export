@@ -351,10 +351,10 @@ def hide_tags(md_text):
 
 def restore_tags(md_text):
     # Tags back to normal Bear tags, stripping the `period+space` at start of line:
-    # if hide_tags_in_comment_block:
-    md_text =  re.sub(r'(\n)<!--[ \t]*(\#[^\s#].*?) -->', r'\1\2', md_text)
-    # else:
-    md_text =  re.sub(r'(\n)\.[ \t]*(\#[^\s#]+)', r'\1\2', md_text)
+    if hide_tags_in_comment_block:
+        md_text =  re.sub(r'(\n)<!--[ \t]*(\#[^\s#].*?) -->', r'\1\2', md_text)
+    else:
+        md_text =  re.sub(r'(\n)\.[ \t]*(\#[^\s#]+)', r'\1\2', md_text)
     return md_text
 
 
