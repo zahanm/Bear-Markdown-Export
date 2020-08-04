@@ -48,10 +48,10 @@ hide_tags_in_comment_block = False  # Hide tags in HTML comments: `<!-- #mytag -
 only_export_these_tags = []  # Leave this list empty for all notes! See below for sample
 # only_export_these_tags = ['bear/github', 'writings'] 
 
-export_as_textbundles = True  # Exports as Textbundles with images included
+export_as_textbundles = False  # Exports as Textbundles with images included
 export_as_hybrids = True  # Exports as .textbundle only if images included, otherwise as .md
                           # Only used if `export_as_textbundles = True`
-export_image_repository = True  # Export all notes as md but link images to 
+export_image_repository = False  # Export all notes as md but link images to
                                  # a common repository exported to: `assets_path` 
                                  # Only used if `export_as_textbundles = False`
 
