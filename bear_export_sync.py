@@ -358,6 +358,32 @@ def restore_tags(md_text):
     return md_text
 
 
+def convert_tasklist_syntax(md_text):
+    # In Bear, a task list is modelled like so:
+    # - Foo
+    # + Bar
+    # But in standard Markdown, that's an un-ordered list.
+    # Instead, this is a task list:
+    # - [ ] Foo
+    # - [x] Bar
+    # This converts from the former, to the latter.
+    md_text = re.sub(r'(\n)[ \t]*(\-[^\s].*)', r'\1- \[ \] \2', md_text) # un-checked todo item
+    md_text = re.sub(r'(\n)[ \t]*(+[^\s].*)', r'\1- \[x\] \2', md_text) # checked todo item
+    return md_text
+
+# TODO need to capture indentation
+# Like
+# - Foo
+#  + Bar
+# - Baz
+
+def restore_tasklist_syntax(md_text):
+    # See convert_tasklist_syntax()
+    md_text = re.sub(r'(\n)- \[ \]', r'\1-', md_text) # un-checked todo item
+    md_text = re.sub(r'(\n)- \[x\]', r'\1+', md_text) # checked todo item
+    return md_text
+
+
 def clean_title(title):
     og_title = title
     title = title[:256].strip()
